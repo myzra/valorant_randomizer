@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valorant Agent Selector</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c10;--surface:#0f1218;--card:#141820;--card2:#1a2030;
+  --border:#1e2535;--border2:#2a3550;
+  --accent:#ff4655;--accent-glow:rgba(255,70,85,0.15);
+  --duelist:#ff4655;--initiator:#00d4aa;--controller:#7c5cbf;--sentinel:#f5a623;
+  --text:#e8eaf0;--text2:#8892a4;--text3:#4a5568;
+}
+body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;overflow-x:hidden}
+.scanlines{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px)}
+.corner-deco{position:fixed;width:60px;height:60px;pointer-events:none;z-index:998}
+.corner-deco.tl{top:0;left:0;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.corner-deco.tr{top:0;right:0;border-top:2px solid var(--accent);border-right:2px solid var(--accent)}
+.corner-deco.bl{bottom:0;left:0;border-bottom:2px solid var(--accent);border-left:2px solid var(--accent)}
+.corner-deco.br{bottom:0;right:0;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+.app{max-width:900px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.header{text-align:center;margin-bottom:2.5rem}
+.header-tag{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:0.5rem}
+.header h1{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,6vw,3.5rem);font-weight:700;text-transform:uppercase;letter-spacing:2px;line-height:1}
+.header h1 span{color:var(--accent)}
+.header-line{width:80px;height:2px;background:var(--accent);margin:0.75rem auto 0;position:relative}
+.header-line::before,.header-line::after{content:'';position:absolute;top:-2px;width:6px;height:6px;background:var(--accent)}
+.header-line::before{left:-8px}.header-line::after{right:-8px}
+.controls-panel{background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:2rem;position:relative}
+.controls-panel::before{content:'MISSION PARAMETERS';position:absolute;top:-10px;left:16px;background:var(--surface);padding:0 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:3px}
+.controls-row{display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-start}
+.control-group{flex:1;min-width:140px}
+.control-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.5rem}
+.control-value{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:var(--accent);line-height:1;margin-bottom:0.5rem}
+input[type=range]{width:100%;appearance:none;height:3px;background:var(--border2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:16px;height:16px;background:var(--accent);transform:rotate(45deg);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--accent);transform:rotate(45deg);cursor:pointer;border:none}
+.toggle-wrap{display:flex;align-items:center;gap:0.75rem;cursor:pointer;user-select:none;margin-bottom:0.6rem}
+.toggle{width:44px;height:22px;background:var(--border2);border:1px solid var(--border2);border-radius:11px;position:relative;transition:all .3s;cursor:pointer;flex-shrink:0}
+.toggle.on{background:var(--accent);border-color:var(--accent)}
+.toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:var(--text);border-radius:50%;transition:transform .3s}
+.toggle.on::after{transform:translateX(22px)}
+.toggle-label{font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--text2);letter-spacing:1px}
+.toggle-label.on{color:var(--text)}
+.btn-row{display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.btn{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:3px;text-transform:uppercase;padding:0.85rem 2rem;border:none;cursor:pointer;transition:all .2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover:not(:disabled){background:#ff2030;transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-primary:disabled{background:#4a2030;color:#8a5060;cursor:not-allowed}
+.btn-secondary{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-secondary:hover{color:var(--text);border-color:var(--text2)}
+.warning-bar{background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-left:3px solid var(--sentinel);padding:0.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--sentinel);letter-spacing:1px;font-family:'Share Tech Mono',monospace}
+.role-legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;letter-spacing:1px}
+.legend-dot{width:8px;height:8px;transform:rotate(45deg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem}
+.player-card{background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color .3s}
+.player-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);opacity:0.4;transition:opacity .3s}
+.player-card.has-agent::before{opacity:1}
+.player-card.revealed{animation:cardReveal .4s ease-out}
+@keyframes cardReveal{0%{transform:translateY(-4px);opacity:0.5}60%{transform:translateY(2px)}100%{transform:translateY(0);opacity:1}}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1rem;border-bottom:1px solid var(--border)}
+.player-name-input{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text);background:transparent;border:none;outline:none;width:100%;max-width:120px;letter-spacing:1px;padding:2px 4px;border-bottom:1px solid transparent;transition:border-color .2s;text-transform:uppercase}
+.player-name-input::placeholder{color:var(--text3)}
+.player-name-input:focus{border-bottom-color:var(--accent)}
+.role-badge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;padding:2px 8px;text-transform:uppercase;flex-shrink:0}
+.role-badge.Duelist{background:rgba(255,70,85,0.15);color:var(--duelist);border:1px solid rgba(255,70,85,0.3)}
+.role-badge.Initiator{background:rgba(0,212,170,0.15);color:var(--initiator);border:1px solid rgba(0,212,170,0.3)}
+.role-badge.Controller{background:rgba(124,92,191,0.15);color:var(--controller);border:1px solid rgba(124,92,191,0.3)}
+.role-badge.Sentinel{background:rgba(245,166,35,0.15);color:var(--sentinel);border:1px solid rgba(245,166,35,0.3)}
+.card-body{padding:0.75rem 1rem;display:flex;align-items:center;gap:1rem}
+.agent-icon{width:64px;height:64px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;flex-shrink:0;overflow:hidden;position:relative}
+.agent-icon img{width:100%;height:100%;object-fit:cover;display:none}
+.agent-icon img.loaded{display:block}
+.agent-icon .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700}
+.agent-info{flex:1;min-width:0}
+.agent-name{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;line-height:1;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agent-empty{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text3);letter-spacing:2px}
+.agent-role-sub{font-family:'Share Tech Mono',monospace;font-size:10px;margin-top:4px;letter-spacing:1px}
+.icon-hint{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1px;margin-top:2px}
+.spin-name{font-family:'Share Tech Mono',monospace;font-size:11px;animation:spinPulse .15s ease-in-out infinite;color:var(--accent)}
+@keyframes spinPulse{0%,100%{opacity:0.4}50%{opacity:1}}
+.icon-spinning{animation:iconPulse .2s ease-in-out infinite}
+@keyframes iconPulse{0%,100%{opacity:0.3;transform:scale(0.9)}50%{opacity:1;transform:scale(1.05)}}
+
+/* Role filter strip */
+.role-filter-strip{padding:0.5rem 1rem 0.6rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-wrap:wrap;transition:opacity .25s}
+.role-filter-strip.disabled{opacity:0.3;pointer-events:none;cursor:not-allowed}
+.filter-label{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;margin-right:2px;flex-shrink:0}
+.role-chip{display:flex;align-items:center;gap:4px;padding:3px 8px 3px 5px;border:1px solid var(--border2);background:transparent;cursor:pointer;user-select:none;transition:all .18s;border-radius:2px}
+.role-chip:hover{border-color:var(--text3)}
+.role-chip.active-D{border-color:var(--duelist);background:rgba(255,70,85,0.12)}
+.role-chip.active-I{border-color:var(--initiator);background:rgba(0,212,170,0.12)}
+.role-chip.active-C{border-color:var(--controller);background:rgba(124,92,191,0.12)}
+.role-chip.active-S{border-color:var(--sentinel);background:rgba(245,166,35,0.12)}
+.chip-box{width:11px;height:11px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s;transform:rotate(45deg)}
+.role-chip.active-D .chip-box{border-color:var(--duelist);background:var(--duelist)}
+.role-chip.active-I .chip-box{border-color:var(--initiator);background:var(--initiator)}
+.role-chip.active-C .chip-box{border-color:var(--controller);background:var(--controller)}
+.role-chip.active-S .chip-box{border-color:var(--sentinel);background:var(--sentinel)}
+.chip-check{width:6px;height:6px;display:none;transform:rotate(-45deg);position:relative}
+.role-chip.active-D .chip-check,.role-chip.active-I .chip-check,.role-chip.active-C .chip-check,.role-chip.active-S .chip-check{display:block}
+.chip-check::before{content:'';position:absolute;width:2px;height:4px;background:#0a0c10;top:1px;left:2px;transform:rotate(40deg)}
+.chip-check::after{content:'';position:absolute;width:4px;height:2px;background:#0a0c10;top:2px;left:1px;transform:rotate(40deg)}
+.chip-text{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text3);transition:color .18s}
+.role-chip.active-D .chip-text{color:var(--duelist)}
+.role-chip.active-I .chip-text{color:var(--initiator)}
+.role-chip.active-C .chip-text{color:var(--controller)}
+.role-chip.active-S .chip-text{color:var(--sentinel)}
+.filter-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+.filter-active-badge{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:1px;opacity:0;transition:opacity .2s}
+.filter-active-badge.show{opacity:1}
+.filter-balanced-note{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1px;opacity:0;transition:opacity .25s;white-space:nowrap}
+.role-filter-strip.disabled .filter-balanced-note{opacity:1}
+
+.used-panel{background:var(--surface);border:1px solid var(--border);padding:1.25rem;margin-top:2rem;position:relative}
+.used-panel::before{content:'USED AGENTS';position:absolute;top:-10px;left:16px;background:var(--surface);padding:0 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:3px}
+.used-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:0.25rem}
+.used-chip{font-family:'Share Tech Mono',monospace;font-size:10px;background:var(--card);border:1px solid var(--border);padding:3px 8px;letter-spacing:1px;text-decoration:line-through}
+.footer-credit{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:0.5rem}
+.footer-credit a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text3);text-decoration:none;letter-spacing:2px;transition:color .2s;display:flex;align-items:center;gap:6px}
+.footer-credit a:hover{color:var(--accent)}
+.footer-credit a:hover .gh-icon path{stroke:var(--accent)}
+.footer-credit .sep{color:var(--text3);font-family:'Share Tech Mono',monospace;font-size:11px}
+.footer-credit .gh-icon{width:14px;height:14px;flex-shrink:0}
+.footer-credit .gh-icon path{stroke:var(--text3);transition:stroke .2s}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="corner-deco tl"></div><div class="corner-deco tr"></div>
+<div class="corner-deco bl"></div><div class="corner-deco br"></div>
+
+<div class="app">
+  <div class="header">
+    <div class="header-tag">Valorant // Random Agent Selector</div>
+    <h1>AGENT<span>//</span>DRAFT</h1>
+    <div class="header-line"></div>
+  </div>
+
+  <div class="controls-panel">
+    <div class="controls-row">
+      <div class="control-group">
+        <div class="control-label">Team Size</div>
+        <div class="control-value" id="teamSizeVal">03</div>
+        <input type="range" id="teamSize" min="1" max="5" value="3" step="1">
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace">01</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace">05</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label">Mode Options</div>
+        <div class="toggle-wrap" id="balancedToggle">
+          <div class="toggle" id="balancedSwitch"></div>
+          <div class="toggle-label" id="balancedLabel">Balanced Composition</div>
+        </div>
+        <div class="toggle-wrap" id="noRepeatToggle">
+          <div class="toggle" id="noRepeatSwitch"></div>
+          <div class="toggle-label" id="noRepeatLabel">No Repeat Agents</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-legend">
+    <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:2px;margin-right:0.5rem">ROLES:</span>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--duelist)"></div><span style="color:var(--duelist)">Duelist</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--initiator)"></div><span style="color:var(--initiator)">Initiator</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--controller)"></div><span style="color:var(--controller)">Controller</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--sentinel)"></div><span style="color:var(--sentinel)">Sentinel</span></div>
+  </div>
+
+  <div id="warningBar" class="warning-bar" style="display:none"></div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" id="randomizeBtn">&#9658; Randomize</button>
+    <button class="btn btn-secondary" id="resetBtn">&#8635; Reset All</button>
+    <button class="btn btn-secondary" id="clearHistoryBtn">&#10005; Clear History</button>
+  </div>
+
+  <div class="grid" id="playerGrid"></div>
+
+  <div class="used-panel" id="usedPanel" style="display:none">
+    <div class="used-chips" id="usedChips"></div>
+  </div>
+
+  <div class="footer-credit">
+    <span class="sep">MADE BY</span>
+    <a href="https://github.com/myzra" target="_blank" rel="noopener">
+      <svg class="gh-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      MYZRA
+    </a>
+  </div>
+</div>
+
+<script>
+const AGENTS=[
+  {name:"Jett",role:"Duelist"},{name:"Reyna",role:"Duelist"},{name:"Phoenix",role:"Duelist"},
+  {name:"Raze",role:"Duelist"},{name:"Yoru",role:"Duelist"},{name:"Neon",role:"Duelist"},
+  {name:"Iso",role:"Duelist"},{name:"Waylay",role:"Duelist"},
+  {name:"Sova",role:"Initiator"},{name:"Breach",role:"Initiator"},{name:"Skye",role:"Initiator"},
+  {name:"KAY/O",role:"Initiator"},{name:"Fade",role:"Initiator"},{name:"Gekko",role:"Initiator"},
+  {name:"Tejo",role:"Initiator"},
+  {name:"Brimstone",role:"Controller"},{name:"Omen",role:"Controller"},{name:"Viper",role:"Controller"},
+  {name:"Astra",role:"Controller"},{name:"Harbor",role:"Controller"},{name:"Clove",role:"Controller"},
+  {name:"Miks",role:"Controller"},
+  {name:"Deadlock",role:"Sentinel"},{name:"Cypher",role:"Sentinel"},{name:"Sage",role:"Sentinel"},
+  {name:"Killjoy",role:"Sentinel"},{name:"Chamber",role:"Sentinel"},{name:"Vyse",role:"Sentinel"},
+  {name:"Veto",role:"Sentinel"}
+];
+
+const ROLES=["Duelist","Initiator","Controller","Sentinel"];
+const ROLE_KEY={Duelist:'D',Initiator:'I',Controller:'C',Sentinel:'S'};
+const ROLE_COLORS={Duelist:'#ff4655',Initiator:'#00d4aa',Controller:'#7c5cbf',Sentinel:'#f5a623'};
+const ROLE_BG={Duelist:'rgba(255,70,85,0.12)',Initiator:'rgba(0,212,170,0.12)',Controller:'rgba(124,92,191,0.12)',Sentinel:'rgba(245,166,35,0.12)'};
+const ICON_BASE_PATH='./icons/agents/';
+const ICON_FORMATS=['png','jpg','webp'];
+function agentIconFilename(n){return n.toLowerCase().replace(/[^a-z0-9]/g,'')}
+function agentIconPath(n,fmt){return`${ICON_BASE_PATH}${agentIconFilename(n)}.${fmt}`}
+function agentInitials(n){return n.split('/').map(s=>s[0]).join('').toUpperCase().substring(0,2)||n.substring(0,2).toUpperCase()}
+
+let teamSize=3,balanced=false,noRepeat=false;
+let usedAgents=[],currentTeam=[],playerNames=['','','','',''];
+let playerRoleFilters=[new Set(),new Set(),new Set(),new Set(),new Set()];
+let spinning=false;
+
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+
+function getAvailable(playerIdx=null){
+  let pool=AGENTS;
+  if(noRepeat){const u=new Set(usedAgents.map(a=>a.name));pool=pool.filter(a=>!u.has(a.name))}
+  if(playerIdx!==null){const f=playerRoleFilters[playerIdx];if(f&&f.size>0)pool=pool.filter(a=>f.has(a.role))}
+  return pool;
+}
+
+function generateTeam(size,bal){
+  if(bal){
+    const globalPool=getAvailable();
+    const byRole={};
+    ROLES.forEach(r=>{byRole[r]=shuffle(globalPool.filter(a=>a.role===r))});
+    if(size<=4){
+      const picked=shuffle(ROLES).slice(0,size);const result=[];
+      for(const r of picked){if(!byRole[r].length)return null;result.push(byRole[r].pop())}
+      return result;
+    } else {
+      const result=[];const used=new Set();
+      for(const r of ROLES){if(!byRole[r].length)return null;const a=byRole[r].pop();result.push(a);used.add(a.name)}
+      const rem=globalPool.filter(a=>!used.has(a.name));
+      if(!rem.length)return null;
+      result.push(rem[Math.floor(Math.random()*rem.length)]);
+      return shuffle(result);
+    }
+  } else {
+    const result=[];const usedNames=new Set();
+    for(let i=0;i<size;i++){
+      let pool=getAvailable(i).filter(a=>!usedNames.has(a.name));
+      if(!pool.length)return null;
+      const pick=pool[Math.floor(Math.random()*pool.length)];
+      result.push(pick);usedNames.add(pick.name);
+    }
+    return result;
+  }
+}
+
+function canGenerate(){
+  if(balanced){
+    const av=getAvailable();
+    if(av.length<teamSize)return false;
+    for(const r of ROLES){if(!av.find(a=>a.role===r))return false}
+    return true;
+  } else {
+    for(let i=0;i<teamSize;i++){if(!getAvailable(i).length)return false}
+    return true;
+  }
+}
+
+function makeAgentIconEl(agent){
+  const col=ROLE_COLORS[agent.role],bg=ROLE_BG[agent.role],ini=agentInitials(agent.name);
+  const wrap=document.createElement('div');
+  wrap.className='agent-icon';wrap.style.cssText=`width:64px;height:64px;background:${bg};border:1px solid ${col}33`;
+  const fallback=document.createElement('span');
+  fallback.className='fallback';fallback.style.color=col;fallback.textContent=ini;
+  const img=document.createElement('img');img.alt=agent.name;
+  let fi=0;
+  function tryNext(){if(fi>=ICON_FORMATS.length){img.remove();fallback.style.display='flex';return}img.src=agentIconPath(agent.name,ICON_FORMATS[fi]);fi++}
+  img.onload=()=>{img.classList.add('loaded');fallback.style.display='none'};
+  img.onerror=()=>tryNext();
+  fallback.style.display='flex';tryNext();
+  wrap.appendChild(img);wrap.appendChild(fallback);return wrap;
+}
+
+function makeSpinIconEl(){
+  const wrap=document.createElement('div');wrap.className='agent-icon icon-spinning';
+  wrap.style.cssText='width:64px;height:64px;background:var(--accent-glow);border:1px solid rgba(255,70,85,0.3)';
+  const sp=document.createElement('span');sp.style.cssText='color:var(--accent);font-family:"Rajdhani",sans-serif;font-size:22px;font-weight:700';
+  sp.textContent='??';wrap.appendChild(sp);return wrap;
+}
+
+function makeRoleFilterStrip(playerIdx){
+  const strip=document.createElement('div');
+  strip.className='role-filter-strip'+(balanced?' disabled':'');
+  strip.dataset.stripIdx=playerIdx;
+
+  const lbl=document.createElement('span');lbl.className='filter-label';lbl.textContent='ROLES:';
+  strip.appendChild(lbl);
+
+  const f=playerRoleFilters[playerIdx];
+  ROLES.forEach(role=>{
+    const key=ROLE_KEY[role];
+    const chip=document.createElement('div');
+    chip.className='role-chip'+(f.has(role)?` active-${key}`:'');
+    chip.dataset.role=role;chip.dataset.idx=playerIdx;
+
+    const box=document.createElement('div');box.className='chip-box';
+    const chk=document.createElement('div');chk.className='chip-check';
+    box.appendChild(chk);
+    const txt=document.createElement('span');txt.className='chip-text';txt.textContent=role.substring(0,3).toUpperCase();
+    chip.appendChild(box);chip.appendChild(txt);
+
+    chip.addEventListener('click',()=>{
+      if(balanced)return;
+      const fi=playerRoleFilters[parseInt(chip.dataset.idx)];
+      const r=chip.dataset.role;
+      if(fi.has(r))fi.delete(r);else fi.add(r);
+      chip.className='role-chip'+(fi.has(r)?` active-${ROLE_KEY[r]}`:'');
+      const badge=strip.querySelector('.filter-active-badge');
+      if(badge)badge.className='filter-active-badge'+(fi.size>0?' show':'');
+      saveSettings();
+    });
+    strip.appendChild(chip);
+  });
+
+  const right=document.createElement('div');right.className='filter-right';
+  const badge=document.createElement('span');badge.className='filter-active-badge'+(f.size>0?' show':'');badge.textContent='FILTERED';
+  const note=document.createElement('span');note.className='filter-balanced-note';note.textContent='N/A (BALANCED)';
+  right.appendChild(badge);right.appendChild(note);
+  strip.appendChild(right);
+  return strip;
+}
+
+/* Update all filter strips when balanced toggles */
+function updateFilterStrips(){
+  document.querySelectorAll('.role-filter-strip').forEach(strip=>{
+    if(balanced)strip.classList.add('disabled');
+    else strip.classList.remove('disabled');
+  });
+}
+
+function renderGrid(team=null,isSpinning=false){
+  const grid=document.getElementById('playerGrid');grid.innerHTML='';
+  const count=team?team.length:teamSize;
+  for(let i=0;i<count;i++){
+    const agent=team?team[i]:null;
+    const card=document.createElement('div');
+    card.className='player-card'+(agent?' has-agent revealed':'');
+    if(agent)card.style.borderColor=ROLE_COLORS[agent.role]+'33';
+
+    const header=document.createElement('div');header.className='card-header';
+    const nameInput=document.createElement('input');
+    nameInput.type='text';nameInput.className='player-name-input';
+    nameInput.placeholder=`PLAYER ${String(i+1).padStart(2,'0')}`;
+    nameInput.value=playerNames[i]||'';nameInput.maxLength=16;nameInput.dataset.idx=i;
+    nameInput.addEventListener('input',e=>{playerNames[parseInt(e.target.dataset.idx)]=e.target.value;saveSettings()});
+    header.appendChild(nameInput);
+
+    if(isSpinning){
+      const t=document.createElement('span');t.style.cssText='font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--accent);letter-spacing:2px';t.textContent='ROLLING...';header.appendChild(t);
+    } else if(agent){
+      const b=document.createElement('span');b.className='role-badge '+agent.role;b.textContent=agent.role;header.appendChild(b);
+    } else {
+      const t=document.createElement('span');t.style.cssText='font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--text3);letter-spacing:2px';t.textContent='STANDBY';header.appendChild(t);
+    }
+    card.appendChild(header);
+
+    const body=document.createElement('div');body.className='card-body';
+    if(isSpinning){
+      body.appendChild(makeSpinIconEl());
+      const info=document.createElement('div');info.className='agent-info';
+      const nm=document.createElement('div');nm.className='spin-name';nm.id='spinName'+i;nm.textContent='SCANNING...';
+      info.appendChild(nm);body.appendChild(info);
+    } else if(agent){
+      body.appendChild(makeAgentIconEl(agent));
+      const info=document.createElement('div');info.className='agent-info';
+      const nm=document.createElement('div');nm.className='agent-name';nm.textContent=agent.name;
+      const sub=document.createElement('div');sub.className='agent-role-sub';sub.style.color=ROLE_COLORS[agent.role];sub.textContent=agent.role.toUpperCase();
+      info.appendChild(nm);info.appendChild(sub);body.appendChild(info);
+    } else {
+      const iw=document.createElement('div');iw.className='agent-icon';iw.style.cssText='width:64px;height:64px;background:var(--card2);border:1px solid var(--border)';
+      const q=document.createElement('span');q.style.cssText='color:var(--text3);font-size:20px;font-family:"Rajdhani",sans-serif;font-weight:700';q.textContent='?';iw.appendChild(q);
+      body.appendChild(iw);
+      const info=document.createElement('div');info.className='agent-info';
+      const em=document.createElement('div');em.className='agent-empty';em.textContent='AWAITING AGENT';
+      const hint=document.createElement('div');hint.className='icon-hint';hint.textContent='./icons/agents/';
+      info.appendChild(em);info.appendChild(hint);body.appendChild(info);
+    }
+    card.appendChild(body);
+    card.appendChild(makeRoleFilterStrip(i));
+    grid.appendChild(card);
+  }
+}
+
+async function doRandomize(){
+  if(spinning)return;
+  if(!canGenerate()){
+    const w=document.getElementById('warningBar');w.style.display='block';
+    w.textContent=balanced?'Cannot generate balanced team. Not enough agents per role available.':'One or more players have no available agents with their current role filter.';
+    return;
+  }
+  document.getElementById('warningBar').style.display='none';
+  spinning=true;document.getElementById('randomizeBtn').disabled=true;
+  const team=generateTeam(teamSize,balanced);
+  if(!team){document.getElementById('warningBar').style.display='block';document.getElementById('warningBar').textContent='Could not generate team with current settings.';spinning=false;document.getElementById('randomizeBtn').disabled=false;return}
+  renderGrid(null,true);
+  const spinAgents=shuffle([...AGENTS]);let frame=0;
+  const interval=setInterval(()=>{
+    for(let i=0;i<teamSize;i++){const el=document.getElementById('spinName'+i);if(el)el.textContent=spinAgents[frame%spinAgents.length].name.toUpperCase().substring(0,10)}
+    frame++;
+  },70);
+  await new Promise(r=>setTimeout(r,1300));
+  clearInterval(interval);
+  renderGrid(team,false);currentTeam=team;
+  if(noRepeat){usedAgents=[...usedAgents,...team.filter(a=>!usedAgents.find(u=>u.name===a.name))];saveState();renderUsed()}
+  spinning=false;document.getElementById('randomizeBtn').disabled=false;saveSettings();
+}
+
+function renderUsed(){
+  const panel=document.getElementById('usedPanel'),chips=document.getElementById('usedChips');
+  if(!noRepeat||!usedAgents.length){panel.style.display='none';return}
+  panel.style.display='block';
+  chips.innerHTML=usedAgents.map(a=>`<span class="used-chip" style="color:${ROLE_COLORS[a.role]}88;border-color:${ROLE_COLORS[a.role]}22">${a.name}</span>`).join('');
+}
+
+function saveSettings(){
+  try{const filters=playerRoleFilters.map(s=>[...s]);localStorage.setItem('vag_settings',JSON.stringify({teamSize,balanced,noRepeat,playerNames,filters}))}catch(e){}
+}
+function saveState(){try{localStorage.setItem('vag_used',JSON.stringify(usedAgents))}catch(e){}}
+function loadState(){
+  try{
+    const s=JSON.parse(localStorage.getItem('vag_settings')||'{}');
+    if(s.teamSize)teamSize=s.teamSize;if(s.balanced!==undefined)balanced=s.balanced;if(s.noRepeat!==undefined)noRepeat=s.noRepeat;
+    if(Array.isArray(s.playerNames))playerNames=s.playerNames;
+    if(Array.isArray(s.filters))s.filters.forEach((f,i)=>{if(i<5)playerRoleFilters[i]=new Set(f)});
+    const u=JSON.parse(localStorage.getItem('vag_used')||'[]');if(Array.isArray(u))usedAgents=u;
+  }catch(e){}
+}
+function updateToggles(){
+  document.getElementById('balancedSwitch').className='toggle'+(balanced?' on':'');
+  document.getElementById('balancedLabel').className='toggle-label'+(balanced?' on':'');
+  document.getElementById('noRepeatSwitch').className='toggle'+(noRepeat?' on':'');
+  document.getElementById('noRepeatLabel').className='toggle-label'+(noRepeat?' on':'');
+}
+
+document.getElementById('teamSize').addEventListener('input',e=>{teamSize=parseInt(e.target.value);document.getElementById('teamSizeVal').textContent=String(teamSize).padStart(2,'0');currentTeam=[];renderGrid();saveSettings()});
+document.getElementById('balancedToggle').addEventListener('click',()=>{
+  balanced=!balanced;updateToggles();updateFilterStrips();saveSettings();document.getElementById('warningBar').style.display='none';
+});
+document.getElementById('noRepeatToggle').addEventListener('click',()=>{noRepeat=!noRepeat;updateToggles();renderUsed();saveSettings()});
+document.getElementById('randomizeBtn').addEventListener('click',doRandomize);
+document.getElementById('resetBtn').addEventListener('click',()=>{currentTeam=[];renderGrid();document.getElementById('warningBar').style.display='none'});
+document.getElementById('clearHistoryBtn').addEventListener('click',()=>{usedAgents=[];saveState();renderUsed();document.getElementById('warningBar').style.display='none'});
+
+loadState();
+document.getElementById('teamSizeVal').textContent=String(teamSize).padStart(2,'0');
+document.getElementById('teamSize').value=teamSize;
+updateToggles();renderGrid();renderUsed();
+</script>
+</body>
+</html>
