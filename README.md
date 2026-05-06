@@ -37,7 +37,7 @@ When **Balanced Mode** is enabled:
 - Prevents extreme compositions like all-Duelist stacks
 - Guarantees a playable, structured team every time
 
-> Disable balancing to go full chaos mode 🔥
+> Disable balancing to go full random mode 🔥
 
 ---
 
