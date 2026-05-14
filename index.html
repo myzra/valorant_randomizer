@@ -21,7 +21,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 .corner-deco.tr{top:0;right:0;border-top:2px solid var(--accent);border-right:2px solid var(--accent)}
 .corner-deco.bl{bottom:0;left:0;border-bottom:2px solid var(--accent);border-left:2px solid var(--accent)}
 .corner-deco.br{bottom:0;right:0;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
-.app{max-width:900px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.app{max-width:960px;margin:0 auto;padding:2rem 1.5rem 4rem}
 .header{text-align:center;margin-bottom:2.5rem}
 .header-tag{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:0.5rem}
 .header h1{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,6vw,3.5rem);font-weight:700;text-transform:uppercase;letter-spacing:2px;line-height:1}
@@ -29,7 +29,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 .header-line{width:80px;height:2px;background:var(--accent);margin:0.75rem auto 0;position:relative}
 .header-line::before,.header-line::after{content:'';position:absolute;top:-2px;width:6px;height:6px;background:var(--accent)}
 .header-line::before{left:-8px}.header-line::after{right:-8px}
-.controls-panel{background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:2rem;position:relative}
+.controls-panel{background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1.25rem;position:relative}
 .controls-panel::before{content:'MISSION PARAMETERS';position:absolute;top:-10px;left:16px;background:var(--surface);padding:0 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:3px}
 .controls-row{display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-start}
 .control-group{flex:1;min-width:140px}
@@ -39,21 +39,29 @@ input[type=range]{width:100%;appearance:none;height:3px;background:var(--border2
 input[type=range]::-webkit-slider-thumb{appearance:none;width:16px;height:16px;background:var(--accent);transform:rotate(45deg);cursor:pointer}
 input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--accent);transform:rotate(45deg);cursor:pointer;border:none}
 .toggle-wrap{display:flex;align-items:center;gap:0.75rem;cursor:pointer;user-select:none;margin-bottom:0.6rem}
+.toggle-wrap.disabled-mode{opacity:0.4;pointer-events:none;cursor:not-allowed}
 .toggle{width:44px;height:22px;background:var(--border2);border:1px solid var(--border2);border-radius:11px;position:relative;transition:all .3s;cursor:pointer;flex-shrink:0}
 .toggle.on{background:var(--accent);border-color:var(--accent)}
 .toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:var(--text);border-radius:50%;transition:transform .3s}
 .toggle.on::after{transform:translateX(22px)}
 .toggle-label{font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--text2);letter-spacing:1px}
 .toggle-label.on{color:var(--text)}
+.toggle-sublabel{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1px;margin-left:56px;margin-top:-2px;margin-bottom:4px}
 .btn-row{display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
 .btn{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;letter-spacing:3px;text-transform:uppercase;padding:0.85rem 2rem;border:none;cursor:pointer;transition:all .2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-primary:hover:not(:disabled){background:#ff2030;transform:translateY(-1px)}
-.btn-primary:active{transform:translateY(1px)}
+.btn-primary:active:not(:disabled){transform:translateY(1px)}
 .btn-primary:disabled{background:#4a2030;color:#8a5060;cursor:not-allowed}
 .btn-secondary{background:transparent;color:var(--text2);border:1px solid var(--border2)}
-.btn-secondary:hover{color:var(--text);border-color:var(--text2)}
+.btn-secondary:hover:not(:disabled){color:var(--text);border-color:var(--text2)}
+.btn-secondary:disabled{opacity:0.4;cursor:not-allowed}
+.btn-sm{font-size:11px;padding:0.4rem 0.9rem;letter-spacing:2px;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px))}
+.btn-reroll{background:rgba(255,70,85,0.1);color:var(--accent);border:1px solid rgba(255,70,85,0.3);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;padding:4px 10px;cursor:pointer;transition:all .2s;text-transform:uppercase;clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px))}
+.btn-reroll:hover:not(:disabled){background:rgba(255,70,85,0.2);border-color:var(--accent)}
+.btn-reroll:disabled{opacity:0.3;cursor:not-allowed}
 .warning-bar{background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-left:3px solid var(--sentinel);padding:0.75rem 1rem;margin-bottom:1rem;font-size:13px;color:var(--sentinel);letter-spacing:1px;font-family:'Share Tech Mono',monospace}
+.info-bar{background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--initiator);padding:0.6rem 1rem;margin-bottom:0.75rem;font-size:11px;color:var(--initiator);letter-spacing:1px;font-family:'Share Tech Mono',monospace}
 .role-legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border)}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;letter-spacing:1px}
 .legend-dot{width:8px;height:8px;transform:rotate(45deg)}
@@ -86,6 +94,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--acce
 @keyframes spinPulse{0%,100%{opacity:0.4}50%{opacity:1}}
 .icon-spinning{animation:iconPulse .2s ease-in-out infinite}
 @keyframes iconPulse{0%,100%{opacity:0.3;transform:scale(0.9)}50%{opacity:1;transform:scale(1.05)}}
+.card-actions{padding:0.4rem 1rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
 
 /* Role filter strip */
 .role-filter-strip{padding:0.5rem 1rem 0.6rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-wrap:wrap;transition:opacity .25s}
@@ -117,10 +126,87 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--acce
 .filter-balanced-note{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1px;opacity:0;transition:opacity .25s;white-space:nowrap}
 .role-filter-strip.disabled .filter-balanced-note{opacity:1}
 
+/* Used panel */
 .used-panel{background:var(--surface);border:1px solid var(--border);padding:1.25rem;margin-top:2rem;position:relative}
 .used-panel::before{content:'USED AGENTS';position:absolute;top:-10px;left:16px;background:var(--surface);padding:0 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:3px}
 .used-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:0.25rem}
 .used-chip{font-family:'Share Tech Mono',monospace;font-size:10px;background:var(--card);border:1px solid var(--border);padding:3px 8px;letter-spacing:1px;text-decoration:line-through}
+
+/* ── MODAL OVERLAY ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--surface);border:1px solid var(--border2);max-width:800px;width:100%;max-height:90vh;display:flex;flex-direction:column;position:relative}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.modal-title{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+.modal-title span{color:var(--accent)}
+.modal-close{background:transparent;border:1px solid var(--border2);color:var(--text2);font-family:'Share Tech Mono',monospace;font-size:16px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{border-color:var(--accent);color:var(--accent)}
+.modal-body{overflow-y:auto;padding:1.25rem;flex:1}
+.modal-footer{padding:0.75rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0}
+
+/* Played agents manager — portrait cards */
+.played-search{width:100%;background:var(--card);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:0.5rem 0.75rem;letter-spacing:1px;outline:none;margin-bottom:1rem}
+.played-search:focus{border-color:var(--accent)}
+.played-search::placeholder{color:var(--text3)}
+.played-role-section{margin-bottom:1.5rem}
+.played-role-header{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;padding:4px 8px;margin-bottom:10px;display:inline-block}
+.played-role-header.Duelist{color:var(--duelist);border-left:2px solid var(--duelist)}
+.played-role-header.Initiator{color:var(--initiator);border-left:2px solid var(--initiator)}
+.played-role-header.Controller{color:var(--controller);border-left:2px solid var(--controller)}
+.played-role-header.Sentinel{color:var(--sentinel);border-left:2px solid var(--sentinel)}
+.played-agents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+
+/* Agent portrait card — shared base */
+.agent-card{position:relative;background:var(--card);border:1px solid var(--border);cursor:pointer;transition:all .18s;overflow:hidden;display:flex;flex-direction:column;align-items:center;user-select:none}
+.agent-card:hover{border-color:var(--text3)}
+.agent-card-portrait{width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:var(--card2)}
+.agent-card-portrait img{width:100%;height:100%;object-fit:cover;object-position:top center;display:none;transition:opacity .2s}
+.agent-card-portrait img.loaded{display:block}
+.agent-card-portrait .ac-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700}
+.agent-card-name{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;text-align:center;padding:4px 2px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
+.agent-card-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .18s;pointer-events:none}
+/* Played state */
+.agent-card.played{border-color:var(--accent)}
+.agent-card.played .agent-card-portrait::after{content:'';position:absolute;inset:0;background:rgba(255,70,85,0.35);pointer-events:none}
+.agent-card.played .agent-card-name{color:var(--accent)}
+.agent-card.played .agent-card-overlay{opacity:1;background:transparent}
+.agent-card-check{width:22px;height:22px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;clip-path:polygon(0 0,calc(100% - 4px) 0,100% 4px,100% 100%,4px 100%,0 calc(100% - 4px))}
+/* Owned state */
+.agent-card.owned{border-color:var(--initiator)}
+.agent-card.owned .agent-card-portrait::after{content:'';position:absolute;inset:0;background:rgba(0,212,170,0.2);pointer-events:none}
+.agent-card.owned .agent-card-name{color:var(--initiator)}
+.agent-card.owned .agent-card-overlay{opacity:1}
+.agent-card-own-check{width:22px;height:22px;background:var(--initiator);display:flex;align-items:center;justify-content:center;font-size:13px;color:#0a0c10;clip-path:polygon(0 0,calc(100% - 4px) 0,100% 4px,100% 100%,4px 100%,0 calc(100% - 4px))}
+/* Not-owned: dim portrait */
+.agent-card.not-owned .agent-card-portrait{opacity:0.3;filter:grayscale(0.6)}
+.agent-card.not-owned .agent-card-name{color:var(--text3)}
+.agent-card.not-owned:hover .agent-card-portrait{opacity:0.55}
+
+/* Ownership modal */
+.ownership-tabs{display:flex;gap:4px;margin-bottom:1rem;flex-wrap:wrap}
+.ownership-tab{font-family:'Share Tech Mono',monospace;font-size:10px;padding:5px 12px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;letter-spacing:2px;transition:all .18s;text-transform:uppercase}
+.ownership-tab.active{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+.ownership-search{width:100%;background:var(--card);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:0.5rem 0.75rem;letter-spacing:1px;outline:none;margin-bottom:0.75rem}
+.ownership-search:focus{border-color:var(--accent)}
+.ownership-search::placeholder{color:var(--text3)}
+.ownership-bulk-row{display:flex;gap:6px;margin-bottom:0.75rem;align-items:center}
+.ownership-bulk-label{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;margin-right:4px}
+.ownership-role-section{margin-bottom:1.25rem}
+.ownership-role-header{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;padding:4px 8px;margin-bottom:8px;display:inline-block}
+.ownership-role-header.Duelist{color:var(--duelist);border-left:2px solid var(--duelist)}
+.ownership-role-header.Initiator{color:var(--initiator);border-left:2px solid var(--initiator)}
+.ownership-role-header.Controller{color:var(--controller);border-left:2px solid var(--controller)}
+.ownership-role-header.Sentinel{color:var(--sentinel);border-left:2px solid var(--sentinel)}
+.ownership-agents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+.ownership-count{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1px;margin-left:auto}
+
+/* Global options panel */
+.options-panel{background:var(--surface);border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:1.25rem;position:relative;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center}
+.options-panel::before{content:'GLOBAL OPTIONS';position:absolute;top:-10px;left:16px;background:var(--surface);padding:0 8px;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:3px}
+.option-btn{font-family:'Share Tech Mono',monospace;font-size:10px;padding:6px 14px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;letter-spacing:2px;transition:all .18s;text-transform:uppercase}
+.option-btn:hover{border-color:var(--text2);color:var(--text2)}
+.option-btn.active{border-color:var(--initiator);color:var(--initiator);background:rgba(0,212,170,0.08)}
+
 .footer-credit{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:0.5rem}
 .footer-credit a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text3);text-decoration:none;letter-spacing:2px;transition:color .2s;display:flex;align-items:center;gap:6px}
 .footer-credit a:hover{color:var(--accent)}
@@ -134,6 +220,49 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--acce
 <div class="scanlines"></div>
 <div class="corner-deco tl"></div><div class="corner-deco tr"></div>
 <div class="corner-deco bl"></div><div class="corner-deco br"></div>
+
+<!-- PLAYED AGENTS MODAL -->
+<div class="modal-overlay" id="playedModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">PLAYED <span>//</span> AGENTS</div>
+      <button class="modal-close" id="closePlayedModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="text" class="played-search" id="playedSearch" placeholder="SEARCH AGENT...">
+      <div id="playedAgentsList"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" id="markAllPlayedBtn">Mark All Played</button>
+      <button class="btn btn-secondary btn-sm" id="clearAllPlayedBtn">Clear All</button>
+      <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1px;margin-left:auto;align-self:center" id="playedCountLabel">0 / 0 played</span>
+    </div>
+  </div>
+</div>
+
+<!-- OWNERSHIP MODAL -->
+<div class="modal-overlay" id="ownershipModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">OWNERSHIP <span>//</span> MANAGER</div>
+      <button class="modal-close" id="closeOwnershipModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="ownership-tabs" id="ownershipTabs"></div>
+      <input type="text" class="ownership-search" id="ownershipSearch" placeholder="SEARCH AGENT...">
+      <div class="ownership-bulk-row">
+        <span class="ownership-bulk-label">BULK:</span>
+        <button class="btn btn-secondary btn-sm" id="ownSelectAll">Own All</button>
+        <button class="btn btn-secondary btn-sm" id="ownDeselectAll">Own None</button>
+        <span class="ownership-count" id="ownershipCountLabel"></span>
+      </div>
+      <div id="ownershipAgentsList"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-sm" id="closeOwnershipBtn">Done</button>
+    </div>
+  </div>
+</div>
 
 <div class="app">
   <div class="header">
@@ -163,8 +292,18 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--acce
           <div class="toggle" id="noRepeatSwitch"></div>
           <div class="toggle-label" id="noRepeatLabel">No Repeat Agents</div>
         </div>
+        <div class="toggle-wrap" id="ownershipToggle">
+          <div class="toggle" id="ownershipSwitch"></div>
+          <div class="toggle-label" id="ownershipLabel">Use Ownership Rules</div>
+        </div>
+        <div class="toggle-sublabel" id="ownershipDisabledNote" style="display:none">Unavailable in Balanced Composition mode</div>
       </div>
     </div>
+  </div>
+
+  <div class="options-panel">
+    <button class="option-btn" id="openPlayedBtn">&#9654; Manage Played Agents</button>
+    <button class="option-btn" id="openOwnershipBtn">&#9654; Manage Ownership</button>
   </div>
 
   <div class="role-legend">
@@ -176,9 +315,10 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--acce
   </div>
 
   <div id="warningBar" class="warning-bar" style="display:none"></div>
+  <div id="infoBar" class="info-bar" style="display:none"></div>
 
   <div class="btn-row">
-    <button class="btn btn-primary" id="randomizeBtn">&#9658; Randomize</button>
+    <button class="btn btn-primary" id="randomizeBtn">&#9658; Randomize All</button>
     <button class="btn btn-secondary" id="resetBtn">&#8635; Reset All</button>
     <button class="btn btn-secondary" id="clearHistoryBtn">&#10005; Clear History</button>
   </div>
@@ -201,7 +341,10 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--acce
 </div>
 
 <script>
-const AGENTS=[
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const AGENTS = [
   {name:"Jett",role:"Duelist"},{name:"Reyna",role:"Duelist"},{name:"Phoenix",role:"Duelist"},
   {name:"Raze",role:"Duelist"},{name:"Yoru",role:"Duelist"},{name:"Neon",role:"Duelist"},
   {name:"Iso",role:"Duelist"},{name:"Waylay",role:"Duelist"},
@@ -216,260 +359,860 @@ const AGENTS=[
   {name:"Veto",role:"Sentinel"}
 ];
 
-const ROLES=["Duelist","Initiator","Controller","Sentinel"];
-const ROLE_KEY={Duelist:'D',Initiator:'I',Controller:'C',Sentinel:'S'};
-const ROLE_COLORS={Duelist:'#ff4655',Initiator:'#00d4aa',Controller:'#7c5cbf',Sentinel:'#f5a623'};
-const ROLE_BG={Duelist:'rgba(255,70,85,0.12)',Initiator:'rgba(0,212,170,0.12)',Controller:'rgba(124,92,191,0.12)',Sentinel:'rgba(245,166,35,0.12)'};
-const ICON_BASE_PATH='./icons/agents/';
-const ICON_FORMATS=['png','jpg','webp'];
-function agentIconFilename(n){return n.toLowerCase().replace(/[^a-z0-9]/g,'')}
-function agentIconPath(n,fmt){return`${ICON_BASE_PATH}${agentIconFilename(n)}.${fmt}`}
-function agentInitials(n){return n.split('/').map(s=>s[0]).join('').toUpperCase().substring(0,2)||n.substring(0,2).toUpperCase()}
+const ROLES = ["Duelist","Initiator","Controller","Sentinel"];
+const ROLE_KEY = {Duelist:'D',Initiator:'I',Controller:'C',Sentinel:'S'};
+const ROLE_COLORS = {Duelist:'#ff4655',Initiator:'#00d4aa',Controller:'#7c5cbf',Sentinel:'#f5a623'};
+const ROLE_BG = {Duelist:'rgba(255,70,85,0.12)',Initiator:'rgba(0,212,170,0.12)',Controller:'rgba(124,92,191,0.12)',Sentinel:'rgba(245,166,35,0.12)'};
+const ICON_BASE_PATH = './icons/agents/';
+const ICON_FORMATS = ['png','jpg','webp'];
+const MAX_PLAYERS = 5;
 
-let teamSize=3,balanced=false,noRepeat=false;
-let usedAgents=[],currentTeam=[],playerNames=['','','','',''];
-let playerRoleFilters=[new Set(),new Set(),new Set(),new Set(),new Set()];
-let spinning=false;
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let teamSize = 3;
+let balanced = false;
+let noRepeat = false;
+let useOwnership = false;  // Feature 3
 
-function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+let playedAgents = new Set();         // Feature 1: manually/auto played agents
+let playerOwnership = {};             // Feature 3: { [playerId]: Set<agentName> }
+let currentAssignments = {};          // Feature 2: { [playerId]: agentName|null }
+let playerNames = ['','','','',''];
+let playerRoleFilters = [new Set(),new Set(),new Set(),new Set(),new Set()];
+let spinning = false;
 
-function getAvailable(playerIdx=null){
-  let pool=AGENTS;
-  if(noRepeat){const u=new Set(usedAgents.map(a=>a.name));pool=pool.filter(a=>!u.has(a.name))}
-  if(playerIdx!==null){const f=playerRoleFilters[playerIdx];if(f&&f.size>0)pool=pool.filter(a=>f.has(a.role))}
+// Active player tab in ownership modal
+let ownershipActivePlayer = 0;
+let ownershipSearch = '';
+let playedSearch = '';
+
+// ─────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────
+function shuffle(a){ const r=[...a]; for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]} return r }
+function agentIconFilename(n){ return n.toLowerCase().replace(/[^a-z0-9]/g,'') }
+function agentIconPath(n,fmt){ return `${ICON_BASE_PATH}${agentIconFilename(n)}.${fmt}` }
+function agentInitials(n){ return n.split('/').map(s=>s[0]).join('').toUpperCase().substring(0,2)||n.substring(0,2).toUpperCase() }
+function agentByName(name){ return AGENTS.find(a=>a.name===name)||null }
+
+/** Get the effective agent pool for a specific player slot, applying all active filters.
+ *  @param {number} playerIdx
+ *  @param {Set<string>} excludeNames  — names to hard-exclude (other players' current picks)
+ *  @param {string|null} freeAgentName — agent name to exempt from the played-filter (reroll use-case)
+ */
+function getPoolForPlayer(playerIdx, excludeNames = new Set(), freeAgentName = null) {
+  let pool = [...AGENTS];
+
+  // No Repeat: exclude already-played agents, BUT exempt the agent being freed via reroll
+  if (noRepeat) {
+    pool = pool.filter(a => !playedAgents.has(a.name) || a.name === freeAgentName);
+  }
+
+  // Ownership: only agents this player owns
+  if (useOwnership && !balanced) {
+    const owned = playerOwnership[playerIdx];
+    if (owned && owned.size > 0) {
+      pool = pool.filter(a => owned.has(a.name));
+    }
+    // if owned is empty or undefined → all agents (default = owns all)
+  }
+
+  // Role filter for this player
+  const rf = playerRoleFilters[playerIdx];
+  if (rf && rf.size > 0) {
+    pool = pool.filter(a => rf.has(a.role));
+  }
+
+  // Exclude specific names (used to prevent duplicates within same roll)
+  pool = pool.filter(a => !excludeNames.has(a.name));
+
   return pool;
 }
 
-function generateTeam(size,bal){
-  if(bal){
-    const globalPool=getAvailable();
-    const byRole={};
-    ROLES.forEach(r=>{byRole[r]=shuffle(globalPool.filter(a=>a.role===r))});
-    if(size<=4){
-      const picked=shuffle(ROLES).slice(0,size);const result=[];
-      for(const r of picked){if(!byRole[r].length)return null;result.push(byRole[r].pop())}
+/** Get global pool for balanced mode */
+function getGlobalPool(excludeNames = new Set()) {
+  let pool = [...AGENTS];
+  if (noRepeat) {
+    pool = pool.filter(a => !playedAgents.has(a.name));
+  }
+  // Ownership not applied in balanced mode (by design)
+  pool = pool.filter(a => !excludeNames.has(a.name));
+  return pool;
+}
+
+function canGenerate() {
+  if (balanced) {
+    const pool = getGlobalPool();
+    if (pool.length < teamSize) return false;
+    for (const r of ROLES) { if (!pool.find(a => a.role === r)) return false }
+    return true;
+  } else {
+    const usedInRoll = new Set();
+    for (let i = 0; i < teamSize; i++) {
+      const p = getPoolForPlayer(i, usedInRoll);
+      if (!p.length) return false;
+      // We can't guarantee a valid pick exists without actually trying,
+      // but checking pool size > 0 is the minimum
+    }
+    return true;
+  }
+}
+
+function canReroll(playerIdx) {
+  const currentName = currentAssignments[playerIdx];
+  if (!currentName) return false;
+  // Build exclude set: current assignments of OTHER players
+  const others = new Set();
+  for (let i = 0; i < teamSize; i++) {
+    if (i !== playerIdx && currentAssignments[i]) others.add(currentAssignments[i]);
+  }
+  // Pass currentName as freeAgentName so it's exempt from the played-filter,
+  // then also exclude it from the result pool (we want a DIFFERENT agent).
+  const pool = getPoolForPlayer(playerIdx, others, currentName)
+    .filter(a => a.name !== currentName);
+  return pool.length > 0;
+}
+
+// ─────────────────────────────────────────────
+// TEAM GENERATION
+// ─────────────────────────────────────────────
+function generateTeam(size, bal) {
+  if (bal) {
+    const pool = getGlobalPool();
+    const byRole = {};
+    ROLES.forEach(r => { byRole[r] = shuffle(pool.filter(a => a.role === r)) });
+
+    if (size <= 4) {
+      const picked = shuffle(ROLES).slice(0, size);
+      const result = [];
+      for (const r of picked) {
+        if (!byRole[r].length) return null;
+        result.push(byRole[r].pop());
+      }
       return result;
     } else {
-      const result=[];const used=new Set();
-      for(const r of ROLES){if(!byRole[r].length)return null;const a=byRole[r].pop();result.push(a);used.add(a.name)}
-      const rem=globalPool.filter(a=>!used.has(a.name));
-      if(!rem.length)return null;
-      result.push(rem[Math.floor(Math.random()*rem.length)]);
+      const result = []; const used = new Set();
+      for (const r of ROLES) {
+        if (!byRole[r].length) return null;
+        const a = byRole[r].pop(); result.push(a); used.add(a.name);
+      }
+      const rem = pool.filter(a => !used.has(a.name));
+      if (!rem.length) return null;
+      result.push(rem[Math.floor(Math.random() * rem.length)]);
       return shuffle(result);
     }
   } else {
-    const result=[];const usedNames=new Set();
-    for(let i=0;i<size;i++){
-      let pool=getAvailable(i).filter(a=>!usedNames.has(a.name));
-      if(!pool.length)return null;
-      const pick=pool[Math.floor(Math.random()*pool.length)];
-      result.push(pick);usedNames.add(pick.name);
+    const result = []; const usedNames = new Set();
+    for (let i = 0; i < size; i++) {
+      const pool = getPoolForPlayer(i, usedNames);
+      if (!pool.length) return null;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      result.push(pick); usedNames.add(pick.name);
     }
     return result;
   }
 }
 
-function canGenerate(){
-  if(balanced){
-    const av=getAvailable();
-    if(av.length<teamSize)return false;
-    for(const r of ROLES){if(!av.find(a=>a.role===r))return false}
-    return true;
-  } else {
-    for(let i=0;i<teamSize;i++){if(!getAvailable(i).length)return false}
-    return true;
+/** Roll a single agent for one player, freeing their old assignment first.
+ *  Returns the new agent or null if impossible. */
+function rollSinglePlayer(playerIdx) {
+  const oldName = currentAssignments[playerIdx];
+
+  // Build exclude set: current assignments of OTHER players
+  const others = new Set();
+  for (let i = 0; i < teamSize; i++) {
+    if (i !== playerIdx && currentAssignments[i]) others.add(currentAssignments[i]);
+  }
+
+  // Pass oldName as freeAgentName: if noRepeat is on, the old agent is being freed
+  // so it should NOT block the pool calculation — but we still exclude it from picks
+  // (we always want a different agent on reroll).
+  const pool = getPoolForPlayer(playerIdx, others, oldName)
+    .filter(a => a.name !== oldName);
+
+  if (!pool.length) return null;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+/** Mark all current assignments as played (called after full randomize, not on reroll) */
+function markTeamAsPlayed() {
+  if (!noRepeat) return;
+  for (let i = 0; i < teamSize; i++) {
+    if (currentAssignments[i]) playedAgents.add(currentAssignments[i]);
   }
 }
 
-function makeAgentIconEl(agent){
-  const col=ROLE_COLORS[agent.role],bg=ROLE_BG[agent.role],ini=agentInitials(agent.name);
-  const wrap=document.createElement('div');
-  wrap.className='agent-icon';wrap.style.cssText=`width:64px;height:64px;background:${bg};border:1px solid ${col}33`;
-  const fallback=document.createElement('span');
-  fallback.className='fallback';fallback.style.color=col;fallback.textContent=ini;
-  const img=document.createElement('img');img.alt=agent.name;
-  let fi=0;
-  function tryNext(){if(fi>=ICON_FORMATS.length){img.remove();fallback.style.display='flex';return}img.src=agentIconPath(agent.name,ICON_FORMATS[fi]);fi++}
-  img.onload=()=>{img.classList.add('loaded');fallback.style.display='none'};
-  img.onerror=()=>tryNext();
-  fallback.style.display='flex';tryNext();
-  wrap.appendChild(img);wrap.appendChild(fallback);return wrap;
+// ─────────────────────────────────────────────
+// ICON RENDERING
+// ─────────────────────────────────────────────
+function makeAgentIconEl(agent) {
+  const col = ROLE_COLORS[agent.role], bg = ROLE_BG[agent.role], ini = agentInitials(agent.name);
+  const wrap = document.createElement('div');
+  wrap.className = 'agent-icon';
+  wrap.style.cssText = `width:64px;height:64px;background:${bg};border:1px solid ${col}33`;
+  const fallback = document.createElement('span');
+  fallback.className = 'fallback'; fallback.style.color = col; fallback.textContent = ini;
+  const img = document.createElement('img'); img.alt = agent.name;
+  let fi = 0;
+  function tryNext(){ if(fi>=ICON_FORMATS.length){img.remove();fallback.style.display='flex';return} img.src=agentIconPath(agent.name,ICON_FORMATS[fi]);fi++ }
+  img.onload = () => { img.classList.add('loaded'); fallback.style.display='none' };
+  img.onerror = () => tryNext();
+  fallback.style.display = 'flex'; tryNext();
+  wrap.appendChild(img); wrap.appendChild(fallback); return wrap;
 }
 
-function makeSpinIconEl(){
-  const wrap=document.createElement('div');wrap.className='agent-icon icon-spinning';
-  wrap.style.cssText='width:64px;height:64px;background:var(--accent-glow);border:1px solid rgba(255,70,85,0.3)';
-  const sp=document.createElement('span');sp.style.cssText='color:var(--accent);font-family:"Rajdhani",sans-serif;font-size:22px;font-weight:700';
-  sp.textContent='??';wrap.appendChild(sp);return wrap;
+function makeSpinIconEl() {
+  const wrap = document.createElement('div'); wrap.className = 'agent-icon icon-spinning';
+  wrap.style.cssText = 'width:64px;height:64px;background:var(--accent-glow);border:1px solid rgba(255,70,85,0.3)';
+  const sp = document.createElement('span');
+  sp.style.cssText = 'color:var(--accent);font-family:"Rajdhani",sans-serif;font-size:22px;font-weight:700';
+  sp.textContent = '??'; wrap.appendChild(sp); return wrap;
 }
 
-function makeRoleFilterStrip(playerIdx){
-  const strip=document.createElement('div');
-  strip.className='role-filter-strip'+(balanced?' disabled':'');
-  strip.dataset.stripIdx=playerIdx;
-
-  const lbl=document.createElement('span');lbl.className='filter-label';lbl.textContent='ROLES:';
+// ─────────────────────────────────────────────
+// ROLE FILTER STRIP
+// ─────────────────────────────────────────────
+function makeRoleFilterStrip(playerIdx) {
+  const strip = document.createElement('div');
+  strip.className = 'role-filter-strip' + (balanced ? ' disabled' : '');
+  strip.dataset.stripIdx = playerIdx;
+  const lbl = document.createElement('span'); lbl.className = 'filter-label'; lbl.textContent = 'ROLES:';
   strip.appendChild(lbl);
-
-  const f=playerRoleFilters[playerIdx];
-  ROLES.forEach(role=>{
-    const key=ROLE_KEY[role];
-    const chip=document.createElement('div');
-    chip.className='role-chip'+(f.has(role)?` active-${key}`:'');
-    chip.dataset.role=role;chip.dataset.idx=playerIdx;
-
-    const box=document.createElement('div');box.className='chip-box';
-    const chk=document.createElement('div');chk.className='chip-check';
+  const f = playerRoleFilters[playerIdx];
+  ROLES.forEach(role => {
+    const key = ROLE_KEY[role];
+    const chip = document.createElement('div');
+    chip.className = 'role-chip' + (f.has(role) ? ` active-${key}` : '');
+    chip.dataset.role = role; chip.dataset.idx = playerIdx;
+    const box = document.createElement('div'); box.className = 'chip-box';
+    const chk = document.createElement('div'); chk.className = 'chip-check';
     box.appendChild(chk);
-    const txt=document.createElement('span');txt.className='chip-text';txt.textContent=role.substring(0,3).toUpperCase();
-    chip.appendChild(box);chip.appendChild(txt);
-
-    chip.addEventListener('click',()=>{
-      if(balanced)return;
-      const fi=playerRoleFilters[parseInt(chip.dataset.idx)];
-      const r=chip.dataset.role;
-      if(fi.has(r))fi.delete(r);else fi.add(r);
-      chip.className='role-chip'+(fi.has(r)?` active-${ROLE_KEY[r]}`:'');
-      const badge=strip.querySelector('.filter-active-badge');
-      if(badge)badge.className='filter-active-badge'+(fi.size>0?' show':'');
+    const txt = document.createElement('span'); txt.className = 'chip-text'; txt.textContent = role.substring(0,3).toUpperCase();
+    chip.appendChild(box); chip.appendChild(txt);
+    chip.addEventListener('click', () => {
+      if (balanced) return;
+      const fi = playerRoleFilters[parseInt(chip.dataset.idx)];
+      const r = chip.dataset.role;
+      if (fi.has(r)) fi.delete(r); else fi.add(r);
+      chip.className = 'role-chip' + (fi.has(r) ? ` active-${ROLE_KEY[r]}` : '');
+      const badge = strip.querySelector('.filter-active-badge');
+      if (badge) badge.className = 'filter-active-badge' + (fi.size > 0 ? ' show' : '');
       saveSettings();
     });
     strip.appendChild(chip);
   });
-
-  const right=document.createElement('div');right.className='filter-right';
-  const badge=document.createElement('span');badge.className='filter-active-badge'+(f.size>0?' show':'');badge.textContent='FILTERED';
-  const note=document.createElement('span');note.className='filter-balanced-note';note.textContent='N/A (BALANCED)';
-  right.appendChild(badge);right.appendChild(note);
+  const right = document.createElement('div'); right.className = 'filter-right';
+  const badge = document.createElement('span'); badge.className = 'filter-active-badge' + (f.size > 0 ? ' show' : ''); badge.textContent = 'FILTERED';
+  const note = document.createElement('span'); note.className = 'filter-balanced-note'; note.textContent = 'N/A (BALANCED)';
+  right.appendChild(badge); right.appendChild(note);
   strip.appendChild(right);
   return strip;
 }
 
-/* Update all filter strips when balanced toggles */
-function updateFilterStrips(){
-  document.querySelectorAll('.role-filter-strip').forEach(strip=>{
-    if(balanced)strip.classList.add('disabled');
-    else strip.classList.remove('disabled');
+function updateFilterStrips() {
+  document.querySelectorAll('.role-filter-strip').forEach(strip => {
+    if (balanced) strip.classList.add('disabled'); else strip.classList.remove('disabled');
   });
 }
 
-function renderGrid(team=null,isSpinning=false){
-  const grid=document.getElementById('playerGrid');grid.innerHTML='';
-  const count=team?team.length:teamSize;
-  for(let i=0;i<count;i++){
-    const agent=team?team[i]:null;
-    const card=document.createElement('div');
-    card.className='player-card'+(agent?' has-agent revealed':'');
-    if(agent)card.style.borderColor=ROLE_COLORS[agent.role]+'33';
+// ─────────────────────────────────────────────
+// GRID RENDERING
+// ─────────────────────────────────────────────
+function renderGrid(team = null, isSpinning = false, rerollingIdx = -1) {
+  const grid = document.getElementById('playerGrid'); grid.innerHTML = '';
+  const count = team ? team.length : teamSize;
 
-    const header=document.createElement('div');header.className='card-header';
-    const nameInput=document.createElement('input');
-    nameInput.type='text';nameInput.className='player-name-input';
-    nameInput.placeholder=`PLAYER ${String(i+1).padStart(2,'0')}`;
-    nameInput.value=playerNames[i]||'';nameInput.maxLength=16;nameInput.dataset.idx=i;
-    nameInput.addEventListener('input',e=>{playerNames[parseInt(e.target.dataset.idx)]=e.target.value;saveSettings()});
+  for (let i = 0; i < count; i++) {
+    const agent = team ? team[i] : (currentAssignments[i] ? agentByName(currentAssignments[i]) : null);
+    const isThisSpinning = isSpinning && (rerollingIdx === -1 || rerollingIdx === i);
+
+    const card = document.createElement('div');
+    card.className = 'player-card' + (agent && !isThisSpinning ? ' has-agent revealed' : '');
+    if (agent && !isThisSpinning) card.style.borderColor = ROLE_COLORS[agent.role] + '33';
+
+    // Card header
+    const header = document.createElement('div'); header.className = 'card-header';
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text'; nameInput.className = 'player-name-input';
+    nameInput.placeholder = `PLAYER ${String(i+1).padStart(2,'0')}`;
+    nameInput.value = playerNames[i] || ''; nameInput.maxLength = 16; nameInput.dataset.idx = i;
+    nameInput.addEventListener('input', e => { playerNames[parseInt(e.target.dataset.idx)] = e.target.value; saveSettings(); });
     header.appendChild(nameInput);
 
-    if(isSpinning){
-      const t=document.createElement('span');t.style.cssText='font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--accent);letter-spacing:2px';t.textContent='ROLLING...';header.appendChild(t);
-    } else if(agent){
-      const b=document.createElement('span');b.className='role-badge '+agent.role;b.textContent=agent.role;header.appendChild(b);
+    if (isThisSpinning) {
+      const t = document.createElement('span');
+      t.style.cssText = 'font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--accent);letter-spacing:2px';
+      t.textContent = 'ROLLING...'; header.appendChild(t);
+    } else if (agent) {
+      const b = document.createElement('span'); b.className = 'role-badge ' + agent.role; b.textContent = agent.role; header.appendChild(b);
     } else {
-      const t=document.createElement('span');t.style.cssText='font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--text3);letter-spacing:2px';t.textContent='STANDBY';header.appendChild(t);
+      const t = document.createElement('span');
+      t.style.cssText = 'font-family:"Share Tech Mono",monospace;font-size:10px;color:var(--text3);letter-spacing:2px';
+      t.textContent = 'STANDBY'; header.appendChild(t);
     }
     card.appendChild(header);
 
-    const body=document.createElement('div');body.className='card-body';
-    if(isSpinning){
+    // Card body
+    const body = document.createElement('div'); body.className = 'card-body';
+    if (isThisSpinning) {
       body.appendChild(makeSpinIconEl());
-      const info=document.createElement('div');info.className='agent-info';
-      const nm=document.createElement('div');nm.className='spin-name';nm.id='spinName'+i;nm.textContent='SCANNING...';
-      info.appendChild(nm);body.appendChild(info);
-    } else if(agent){
+      const info = document.createElement('div'); info.className = 'agent-info';
+      const nm = document.createElement('div'); nm.className = 'spin-name'; nm.id = 'spinName' + i; nm.textContent = 'SCANNING...';
+      info.appendChild(nm); body.appendChild(info);
+    } else if (agent) {
       body.appendChild(makeAgentIconEl(agent));
-      const info=document.createElement('div');info.className='agent-info';
-      const nm=document.createElement('div');nm.className='agent-name';nm.textContent=agent.name;
-      const sub=document.createElement('div');sub.className='agent-role-sub';sub.style.color=ROLE_COLORS[agent.role];sub.textContent=agent.role.toUpperCase();
-      info.appendChild(nm);info.appendChild(sub);body.appendChild(info);
+      const info = document.createElement('div'); info.className = 'agent-info';
+      const nm = document.createElement('div'); nm.className = 'agent-name'; nm.textContent = agent.name;
+      const sub = document.createElement('div'); sub.className = 'agent-role-sub'; sub.style.color = ROLE_COLORS[agent.role]; sub.textContent = agent.role.toUpperCase();
+      info.appendChild(nm); info.appendChild(sub); body.appendChild(info);
     } else {
-      const iw=document.createElement('div');iw.className='agent-icon';iw.style.cssText='width:64px;height:64px;background:var(--card2);border:1px solid var(--border)';
-      const q=document.createElement('span');q.style.cssText='color:var(--text3);font-size:20px;font-family:"Rajdhani",sans-serif;font-weight:700';q.textContent='?';iw.appendChild(q);
-      body.appendChild(iw);
-      const info=document.createElement('div');info.className='agent-info';
-      const em=document.createElement('div');em.className='agent-empty';em.textContent='AWAITING AGENT';
-      const hint=document.createElement('div');hint.className='icon-hint';hint.textContent='./icons/agents/';
-      info.appendChild(em);info.appendChild(hint);body.appendChild(info);
+      const iw = document.createElement('div'); iw.className = 'agent-icon';
+      iw.style.cssText = 'width:64px;height:64px;background:var(--card2);border:1px solid var(--border)';
+      const q = document.createElement('span'); q.style.cssText = 'color:var(--text3);font-size:20px;font-family:"Rajdhani",sans-serif;font-weight:700'; q.textContent = '?';
+      iw.appendChild(q); body.appendChild(iw);
+      const info = document.createElement('div'); info.className = 'agent-info';
+      const em = document.createElement('div'); em.className = 'agent-empty'; em.textContent = 'AWAITING AGENT';
+      const hint = document.createElement('div'); hint.className = 'icon-hint'; hint.textContent = './icons/agents/';
+      info.appendChild(em); info.appendChild(hint); body.appendChild(info);
     }
     card.appendChild(body);
+
+    // Card actions row: Reroll button (only if agent is assigned)
+    const actions = document.createElement('div'); actions.className = 'card-actions';
+    if (agent && !isThisSpinning) {
+      const rerollBtn = document.createElement('button');
+      rerollBtn.className = 'btn-reroll';
+      rerollBtn.textContent = '↺ REROLL';
+      rerollBtn.dataset.idx = i;
+      const canRR = canReroll(i);
+      rerollBtn.disabled = spinning || !canRR;
+      if (!canRR) rerollBtn.title = 'No valid agents available to reroll into';
+      rerollBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        doReroll(parseInt(rerollBtn.dataset.idx));
+      });
+      actions.appendChild(rerollBtn);
+    } else {
+      // Placeholder to maintain card height consistency
+      const ph = document.createElement('span'); ph.style.height = '28px'; ph.style.display = 'block';
+      actions.appendChild(ph);
+    }
+    card.appendChild(actions);
+
+    // Role filter strip
     card.appendChild(makeRoleFilterStrip(i));
     grid.appendChild(card);
   }
 }
 
-async function doRandomize(){
-  if(spinning)return;
-  if(!canGenerate()){
-    const w=document.getElementById('warningBar');w.style.display='block';
-    w.textContent=balanced?'Cannot generate balanced team. Not enough agents per role available.':'One or more players have no available agents with their current role filter.';
+// ─────────────────────────────────────────────
+// ACTIONS: RANDOMIZE ALL
+// ─────────────────────────────────────────────
+async function doRandomize() {
+  if (spinning) return;
+  hideWarning(); hideInfo();
+
+  if (!canGenerate()) {
+    showWarning(balanced
+      ? 'Cannot generate balanced team. Not enough agents per role available.'
+      : 'One or more players have no available agents with their current role/ownership filter.');
     return;
   }
-  document.getElementById('warningBar').style.display='none';
-  spinning=true;document.getElementById('randomizeBtn').disabled=true;
-  const team=generateTeam(teamSize,balanced);
-  if(!team){document.getElementById('warningBar').style.display='block';document.getElementById('warningBar').textContent='Could not generate team with current settings.';spinning=false;document.getElementById('randomizeBtn').disabled=false;return}
-  renderGrid(null,true);
-  const spinAgents=shuffle([...AGENTS]);let frame=0;
-  const interval=setInterval(()=>{
-    for(let i=0;i<teamSize;i++){const el=document.getElementById('spinName'+i);if(el)el.textContent=spinAgents[frame%spinAgents.length].name.toUpperCase().substring(0,10)}
+
+  const team = generateTeam(teamSize, balanced);
+  if (!team) {
+    showWarning('Could not generate team with current settings. Check filters, ownership, and played agents.');
+    return;
+  }
+
+  // Before rolling, mark the OLD current assignments as played (if noRepeat)
+  // Only mark if there were prior assignments (i.e. this is a re-roll of the full team)
+  const hadPrior = Object.values(currentAssignments).some(v => v);
+  if (hadPrior && noRepeat) {
+    markTeamAsPlayed();
+  }
+
+  // Start spin animation
+  spinning = true;
+  document.getElementById('randomizeBtn').disabled = true;
+
+  // Clear assignments during spin
+  currentAssignments = {};
+  renderGrid(null, true, -1);
+
+  const spinAgents = shuffle([...AGENTS]); let frame = 0;
+  const interval = setInterval(() => {
+    for (let i = 0; i < teamSize; i++) {
+      const el = document.getElementById('spinName' + i);
+      if (el) el.textContent = spinAgents[frame % spinAgents.length].name.toUpperCase().substring(0, 10);
+    }
     frame++;
-  },70);
-  await new Promise(r=>setTimeout(r,1300));
+  }, 70);
+
+  await new Promise(r => setTimeout(r, 1300));
   clearInterval(interval);
-  renderGrid(team,false);currentTeam=team;
-  if(noRepeat){usedAgents=[...usedAgents,...team.filter(a=>!usedAgents.find(u=>u.name===a.name))];saveState();renderUsed()}
-  spinning=false;document.getElementById('randomizeBtn').disabled=false;saveSettings();
+
+  // Apply assignments
+  team.forEach((agent, i) => { currentAssignments[i] = agent.name; });
+
+  // Mark new team as played immediately
+  if (noRepeat) markTeamAsPlayed();
+
+  spinning = false;
+  document.getElementById('randomizeBtn').disabled = false;
+  renderGrid();
+  renderUsed();
+  saveState();
 }
 
-function renderUsed(){
-  const panel=document.getElementById('usedPanel'),chips=document.getElementById('usedChips');
-  if(!noRepeat||!usedAgents.length){panel.style.display='none';return}
-  panel.style.display='block';
-  chips.innerHTML=usedAgents.map(a=>`<span class="used-chip" style="color:${ROLE_COLORS[a.role]}88;border-color:${ROLE_COLORS[a.role]}22">${a.name}</span>`).join('');
+// ─────────────────────────────────────────────
+// FEATURE 2: SINGLE PLAYER REROLL
+// ─────────────────────────────────────────────
+async function doReroll(playerIdx) {
+  if (spinning) return;
+  hideWarning(); hideInfo();
+
+  const newAgent = rollSinglePlayer(playerIdx);
+  if (!newAgent) {
+    showWarning(`No valid agent available to reroll Player ${playerIdx + 1}.`);
+    return;
+  }
+
+  const oldName = currentAssignments[playerIdx];
+
+  // In noRepeat mode: the old agent is freed — it was already in playedAgents
+  // from the last full randomize, so we remove it to "un-play" it.
+  // This follows the spec: rerolling a player frees their old agent.
+  if (noRepeat && oldName) {
+    playedAgents.delete(oldName);
+  }
+
+  // Brief spin animation for this single slot
+  spinning = true;
+  // Disable all reroll buttons during spin
+  document.querySelectorAll('.btn-reroll').forEach(b => b.disabled = true);
+
+  currentAssignments[playerIdx] = null;
+  renderGrid(null, true, playerIdx);
+
+  const spinAgentsArr = shuffle([...AGENTS]); let frame = 0;
+  const interval = setInterval(() => {
+    const el = document.getElementById('spinName' + playerIdx);
+    if (el) el.textContent = spinAgentsArr[frame % spinAgentsArr.length].name.toUpperCase().substring(0, 10);
+    frame++;
+  }, 70);
+
+  await new Promise(r => setTimeout(r, 800));
+  clearInterval(interval);
+
+  // Assign new agent
+  currentAssignments[playerIdx] = newAgent.name;
+
+  // Add new agent to played (since it's now "finalized")
+  if (noRepeat) playedAgents.add(newAgent.name);
+
+  spinning = false;
+  renderGrid();
+  renderUsed();
+  saveState();
 }
 
-function saveSettings(){
-  try{const filters=playerRoleFilters.map(s=>[...s]);localStorage.setItem('vag_settings',JSON.stringify({teamSize,balanced,noRepeat,playerNames,filters}))}catch(e){}
-}
-function saveState(){try{localStorage.setItem('vag_used',JSON.stringify(usedAgents))}catch(e){}}
-function loadState(){
-  try{
-    const s=JSON.parse(localStorage.getItem('vag_settings')||'{}');
-    if(s.teamSize)teamSize=s.teamSize;if(s.balanced!==undefined)balanced=s.balanced;if(s.noRepeat!==undefined)noRepeat=s.noRepeat;
-    if(Array.isArray(s.playerNames))playerNames=s.playerNames;
-    if(Array.isArray(s.filters))s.filters.forEach((f,i)=>{if(i<5)playerRoleFilters[i]=new Set(f)});
-    const u=JSON.parse(localStorage.getItem('vag_used')||'[]');if(Array.isArray(u))usedAgents=u;
-  }catch(e){}
-}
-function updateToggles(){
-  document.getElementById('balancedSwitch').className='toggle'+(balanced?' on':'');
-  document.getElementById('balancedLabel').className='toggle-label'+(balanced?' on':'');
-  document.getElementById('noRepeatSwitch').className='toggle'+(noRepeat?' on':'');
-  document.getElementById('noRepeatLabel').className='toggle-label'+(noRepeat?' on':'');
+// ─────────────────────────────────────────────
+// USED / PLAYED PANEL
+// ─────────────────────────────────────────────
+function renderUsed() {
+  const panel = document.getElementById('usedPanel'), chips = document.getElementById('usedChips');
+  if (!noRepeat || !playedAgents.size) { panel.style.display = 'none'; return; }
+  panel.style.display = 'block';
+  const agents = [...playedAgents].map(n => agentByName(n)).filter(Boolean);
+  chips.innerHTML = agents.map(a =>
+    `<span class="used-chip" style="color:${ROLE_COLORS[a.role]}88;border-color:${ROLE_COLORS[a.role]}22">${a.name}</span>`
+  ).join('');
 }
 
-document.getElementById('teamSize').addEventListener('input',e=>{teamSize=parseInt(e.target.value);document.getElementById('teamSizeVal').textContent=String(teamSize).padStart(2,'0');currentTeam=[];renderGrid();saveSettings()});
-document.getElementById('balancedToggle').addEventListener('click',()=>{
-  balanced=!balanced;updateToggles();updateFilterStrips();saveSettings();document.getElementById('warningBar').style.display='none';
+// ─────────────────────────────────────────────
+// FEATURE 1: PLAYED AGENTS MODAL
+// ─────────────────────────────────────────────
+
+/**
+ * Build a portrait card element for an agent.
+ * @param {object} agent
+ * @param {string} stateClass  — 'played' | 'owned' | 'not-owned' | ''
+ * @param {string} checkSymbol — symbol shown in overlay when active ('✓')
+ * @param {string} checkClass  — CSS class for the check badge
+ * @param {function} onClick
+ */
+function makeAgentCard(agent, stateClass, checkClass, onClick) {
+  const col = ROLE_COLORS[agent.role];
+  const bg  = ROLE_BG[agent.role];
+  const ini = agentInitials(agent.name);
+
+  const card = document.createElement('div');
+  card.className = 'agent-card' + (stateClass ? ' ' + stateClass : '');
+  card.title = agent.name;
+
+  // Portrait
+  const portrait = document.createElement('div');
+  portrait.className = 'agent-card-portrait';
+  portrait.style.background = bg;
+
+  const fallback = document.createElement('span');
+  fallback.className = 'ac-fallback';
+  fallback.style.color = col;
+  fallback.textContent = ini;
+  fallback.style.display = 'flex';
+
+  const img = document.createElement('img');
+  img.alt = agent.name;
+  let fi = 0;
+  function tryNext() {
+    if (fi >= ICON_FORMATS.length) { img.remove(); fallback.style.display = 'flex'; return; }
+    img.src = agentIconPath(agent.name, ICON_FORMATS[fi]); fi++;
+  }
+  img.onload  = () => { img.classList.add('loaded'); fallback.style.display = 'none'; };
+  img.onerror = () => tryNext();
+  tryNext();
+  portrait.appendChild(img);
+  portrait.appendChild(fallback);
+
+  // Overlay check badge
+  const overlay = document.createElement('div');
+  overlay.className = 'agent-card-overlay';
+  const chk = document.createElement('div');
+  chk.className = checkClass;
+  chk.textContent = '✓';
+  overlay.appendChild(chk);
+  portrait.appendChild(overlay);
+
+  card.appendChild(portrait);
+
+  // Name label
+  const nameLbl = document.createElement('div');
+  nameLbl.className = 'agent-card-name';
+  nameLbl.textContent = agent.name.toUpperCase();
+  card.appendChild(nameLbl);
+
+  card.addEventListener('click', () => onClick(card, agent));
+  return card;
+}
+
+function renderPlayedModal() {
+  const list = document.getElementById('playedAgentsList');
+  const search = playedSearch.toLowerCase();
+  list.innerHTML = '';
+
+  ROLES.forEach(role => {
+    const roleAgents = AGENTS.filter(a => a.role === role && (search === '' || a.name.toLowerCase().includes(search)));
+    if (!roleAgents.length) return;
+
+    const sec = document.createElement('div'); sec.className = 'played-role-section';
+    const hdr = document.createElement('div');
+    hdr.className = `played-role-header ${role}`;
+    hdr.textContent = role.toUpperCase();
+    sec.appendChild(hdr);
+
+    const grid = document.createElement('div'); grid.className = 'played-agents-grid';
+
+    roleAgents.forEach(agent => {
+      const isPlayed = playedAgents.has(agent.name);
+      const card = makeAgentCard(
+        agent,
+        isPlayed ? 'played' : '',
+        'agent-card-check',
+        (cardEl) => {
+          if (playedAgents.has(agent.name)) {
+            playedAgents.delete(agent.name);
+            cardEl.classList.remove('played');
+          } else {
+            playedAgents.add(agent.name);
+            cardEl.classList.add('played');
+          }
+          updatePlayedCount();
+          renderUsed();
+          saveState();
+        }
+      );
+      grid.appendChild(card);
+    });
+
+    sec.appendChild(grid);
+    list.appendChild(sec);
+  });
+
+  updatePlayedCount();
+}
+
+function updatePlayedCount() {
+  document.getElementById('playedCountLabel').textContent = `${playedAgents.size} / ${AGENTS.length} played`;
+}
+
+document.getElementById('openPlayedBtn').addEventListener('click', () => {
+  renderPlayedModal();
+  document.getElementById('playedModal').classList.add('open');
 });
-document.getElementById('noRepeatToggle').addEventListener('click',()=>{noRepeat=!noRepeat;updateToggles();renderUsed();saveSettings()});
-document.getElementById('randomizeBtn').addEventListener('click',doRandomize);
-document.getElementById('resetBtn').addEventListener('click',()=>{currentTeam=[];renderGrid();document.getElementById('warningBar').style.display='none'});
-document.getElementById('clearHistoryBtn').addEventListener('click',()=>{usedAgents=[];saveState();renderUsed();document.getElementById('warningBar').style.display='none'});
+document.getElementById('closePlayedModal').addEventListener('click', () => {
+  document.getElementById('playedModal').classList.remove('open');
+});
+document.getElementById('playedModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('playedModal')) document.getElementById('playedModal').classList.remove('open');
+});
+document.getElementById('playedSearch').addEventListener('input', e => {
+  playedSearch = e.target.value;
+  renderPlayedModal();
+});
+document.getElementById('markAllPlayedBtn').addEventListener('click', () => {
+  AGENTS.forEach(a => playedAgents.add(a.name));
+  renderPlayedModal(); renderUsed(); saveState();
+});
+document.getElementById('clearAllPlayedBtn').addEventListener('click', () => {
+  playedAgents.clear();
+  renderPlayedModal(); renderUsed(); saveState();
+});
 
+// ─────────────────────────────────────────────
+// FEATURE 3: OWNERSHIP MODAL
+// ─────────────────────────────────────────────
+function getPlayerOwnership(playerIdx) {
+  if (!playerOwnership[playerIdx]) {
+    // Default: owns all agents
+    playerOwnership[playerIdx] = new Set(AGENTS.map(a => a.name));
+  }
+  return playerOwnership[playerIdx];
+}
+
+function renderOwnershipTabs() {
+  const tabs = document.getElementById('ownershipTabs'); tabs.innerHTML = '';
+  for (let i = 0; i < teamSize; i++) {
+    const tab = document.createElement('div');
+    tab.className = 'ownership-tab' + (i === ownershipActivePlayer ? ' active' : '');
+    tab.textContent = playerNames[i] ? playerNames[i].toUpperCase() : `PLAYER ${String(i+1).padStart(2,'0')}`;
+    tab.dataset.idx = i;
+    tab.addEventListener('click', () => {
+      ownershipActivePlayer = parseInt(tab.dataset.idx);
+      renderOwnershipTabs();
+      renderOwnershipAgents();
+    });
+    tabs.appendChild(tab);
+  }
+}
+
+function renderOwnershipAgents() {
+  const list = document.getElementById('ownershipAgentsList'); list.innerHTML = '';
+  const owned = getPlayerOwnership(ownershipActivePlayer);
+  const search = ownershipSearch.toLowerCase();
+
+  ROLES.forEach(role => {
+    const roleAgents = AGENTS.filter(a => a.role === role && (search === '' || a.name.toLowerCase().includes(search)));
+    if (!roleAgents.length) return;
+
+    const sec = document.createElement('div'); sec.className = 'ownership-role-section';
+    const hdr = document.createElement('div');
+    hdr.className = `ownership-role-header ${role}`;
+    hdr.textContent = role.toUpperCase();
+    sec.appendChild(hdr);
+
+    const grid = document.createElement('div'); grid.className = 'ownership-agents-grid';
+
+    roleAgents.forEach(agent => {
+      const isOwned = owned.has(agent.name);
+      const card = makeAgentCard(
+        agent,
+        isOwned ? 'owned' : 'not-owned',
+        'agent-card-own-check',
+        (cardEl) => {
+          if (owned.has(agent.name)) {
+            owned.delete(agent.name);
+            cardEl.classList.remove('owned');
+            cardEl.classList.add('not-owned');
+          } else {
+            owned.add(agent.name);
+            cardEl.classList.add('owned');
+            cardEl.classList.remove('not-owned');
+          }
+          renderOwnershipCount();
+          saveSettings();
+        }
+      );
+      grid.appendChild(card);
+    });
+
+    sec.appendChild(grid);
+    list.appendChild(sec);
+  });
+
+  renderOwnershipCount();
+}
+
+function renderOwnershipCount() {
+  const owned = getPlayerOwnership(ownershipActivePlayer);
+  document.getElementById('ownershipCountLabel').textContent = `${owned.size} / ${AGENTS.length} owned`;
+}
+
+function renderOwnershipModal() {
+  renderOwnershipTabs();
+  renderOwnershipAgents();
+}
+
+document.getElementById('openOwnershipBtn').addEventListener('click', () => {
+  ownershipActivePlayer = 0;
+  renderOwnershipModal();
+  document.getElementById('ownershipModal').classList.add('open');
+});
+document.getElementById('closeOwnershipModal').addEventListener('click', () => {
+  document.getElementById('ownershipModal').classList.remove('open');
+});
+document.getElementById('closeOwnershipBtn').addEventListener('click', () => {
+  document.getElementById('ownershipModal').classList.remove('open');
+});
+document.getElementById('ownershipModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('ownershipModal')) document.getElementById('ownershipModal').classList.remove('open');
+});
+document.getElementById('ownershipSearch').addEventListener('input', e => {
+  ownershipSearch = e.target.value;
+  renderOwnershipAgents();
+});
+document.getElementById('ownSelectAll').addEventListener('click', () => {
+  const owned = getPlayerOwnership(ownershipActivePlayer);
+  AGENTS.forEach(a => owned.add(a.name));
+  renderOwnershipAgents(); saveSettings();
+});
+document.getElementById('ownDeselectAll').addEventListener('click', () => {
+  const owned = getPlayerOwnership(ownershipActivePlayer);
+  owned.clear();
+  renderOwnershipAgents(); saveSettings();
+});
+
+// ─────────────────────────────────────────────
+// TOGGLES
+// ─────────────────────────────────────────────
+function updateToggles() {
+  document.getElementById('balancedSwitch').className = 'toggle' + (balanced ? ' on' : '');
+  document.getElementById('balancedLabel').className = 'toggle-label' + (balanced ? ' on' : '');
+  document.getElementById('noRepeatSwitch').className = 'toggle' + (noRepeat ? ' on' : '');
+  document.getElementById('noRepeatLabel').className = 'toggle-label' + (noRepeat ? ' on' : '');
+  document.getElementById('ownershipSwitch').className = 'toggle' + (useOwnership ? ' on' : '');
+  document.getElementById('ownershipLabel').className = 'toggle-label' + (useOwnership ? ' on' : '');
+
+  // Ownership is disabled in balanced mode
+  const ownershipWrap = document.getElementById('ownershipToggle');
+  const ownershipNote = document.getElementById('ownershipDisabledNote');
+  if (balanced) {
+    ownershipWrap.classList.add('disabled-mode');
+    ownershipNote.style.display = 'block';
+  } else {
+    ownershipWrap.classList.remove('disabled-mode');
+    ownershipNote.style.display = 'none';
+  }
+}
+
+document.getElementById('teamSize').addEventListener('input', e => {
+  teamSize = parseInt(e.target.value);
+  document.getElementById('teamSizeVal').textContent = String(teamSize).padStart(2, '0');
+  currentAssignments = {};
+  renderGrid(); saveSettings();
+});
+document.getElementById('balancedToggle').addEventListener('click', () => {
+  balanced = !balanced;
+  if (balanced && useOwnership) {
+    useOwnership = false; // auto-disable ownership in balanced mode
+    showInfo('Ownership Rules have been disabled (unavailable in Balanced Composition mode).');
+  }
+  updateToggles(); updateFilterStrips(); saveSettings();
+  hideWarning();
+});
+document.getElementById('noRepeatToggle').addEventListener('click', () => {
+  noRepeat = !noRepeat;
+  updateToggles(); renderUsed(); saveSettings();
+});
+document.getElementById('ownershipToggle').addEventListener('click', () => {
+  if (balanced) return; // blocked in balanced mode
+  useOwnership = !useOwnership;
+  updateToggles(); saveSettings();
+});
+
+// ─────────────────────────────────────────────
+// RESET / CLEAR
+// ─────────────────────────────────────────────
+document.getElementById('randomizeBtn').addEventListener('click', doRandomize);
+document.getElementById('resetBtn').addEventListener('click', () => {
+  currentAssignments = {};
+  renderGrid(); hideWarning(); hideInfo();
+});
+document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+  playedAgents.clear();
+  saveState(); renderUsed(); hideWarning();
+});
+
+// ─────────────────────────────────────────────
+// NOTIFICATIONS
+// ─────────────────────────────────────────────
+function showWarning(msg){ const b=document.getElementById('warningBar');b.style.display='block';b.textContent=msg }
+function hideWarning(){ document.getElementById('warningBar').style.display='none' }
+function showInfo(msg){ const b=document.getElementById('infoBar');b.style.display='block';b.textContent=msg }
+function hideInfo(){ document.getElementById('infoBar').style.display='none' }
+
+// ─────────────────────────────────────────────
+// PERSISTENCE
+// ─────────────────────────────────────────────
+function saveSettings() {
+  try {
+    const filters = playerRoleFilters.map(s => [...s]);
+    const ownership = {};
+    for (const [k, v] of Object.entries(playerOwnership)) ownership[k] = [...v];
+    localStorage.setItem('vag_settings', JSON.stringify({
+      teamSize, balanced, noRepeat, useOwnership, playerNames, filters, ownership
+    }));
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('vag_played', JSON.stringify([...playedAgents]));
+    localStorage.setItem('vag_assignments', JSON.stringify(currentAssignments));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem('vag_settings') || '{}');
+    if (s.teamSize) teamSize = s.teamSize;
+    if (s.balanced !== undefined) balanced = s.balanced;
+    if (s.noRepeat !== undefined) noRepeat = s.noRepeat;
+    if (s.useOwnership !== undefined) useOwnership = s.useOwnership;
+    if (Array.isArray(s.playerNames)) playerNames = s.playerNames;
+    if (Array.isArray(s.filters)) s.filters.forEach((f, i) => { if (i < 5) playerRoleFilters[i] = new Set(f); });
+    if (s.ownership && typeof s.ownership === 'object') {
+      for (const [k, v] of Object.entries(s.ownership)) {
+        playerOwnership[parseInt(k)] = new Set(v);
+      }
+    }
+
+    // Load played agents (new key, fall back to old 'vag_used' for migration)
+    const played = JSON.parse(localStorage.getItem('vag_played') || localStorage.getItem('vag_used') || '[]');
+    if (Array.isArray(played)) {
+      played.forEach(item => {
+        // Support both old format (object with .name) and new format (string)
+        const name = typeof item === 'string' ? item : item.name;
+        if (name) playedAgents.add(name);
+      });
+    }
+
+    // Load current assignments
+    const asgn = JSON.parse(localStorage.getItem('vag_assignments') || '{}');
+    if (asgn && typeof asgn === 'object') currentAssignments = asgn;
+  } catch(e) {}
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
 loadState();
-document.getElementById('teamSizeVal').textContent=String(teamSize).padStart(2,'0');
-document.getElementById('teamSize').value=teamSize;
-updateToggles();renderGrid();renderUsed();
+document.getElementById('teamSizeVal').textContent = String(teamSize).padStart(2, '0');
+document.getElementById('teamSize').value = teamSize;
+updateToggles();
+renderGrid();
+renderUsed();
 </script>
 </body>
 </html>
